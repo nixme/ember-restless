@@ -57,7 +57,7 @@ RESTless.JSONSerializer = RESTless.Serializer.extend({
     } 
     // If property is a belongsTo relationship, deserialze that model
     else if(attr.get('belongsTo')) {
-      var belongsToModel = get(window, attrType).create();
+      var belongsToModel = get(Ember.lookup, attrType).create();
       this.deserialize(belongsToModel, value);
       resource.set(formattedProp, belongsToModel);
       Ember.run.next(function() {
@@ -97,7 +97,7 @@ RESTless.JSONSerializer = RESTless.Serializer.extend({
       resource = RESTless.RecordArray.createWithContent({type: type});
     }
     for(i=0; i<len; i++) {
-      item = get(window, type).create().deserialize(data[i]);
+      item = get(Ember.lookup, type).create().deserialize(data[i]);
       resourceArr.push(item);
     }
     if(resourceArr.length) {
@@ -154,7 +154,7 @@ RESTless.JSONSerializer = RESTless.Serializer.extend({
    * serializeMany: serializes an array of models into json
    */
   serializeMany: function(resourceArr, type) {
-    var resourceName = get(get(window, type), 'resourceName'),
+    var resourceName = get(get(Ember.lookup, type), 'resourceName'),
         result = [],
         len = resourceArr.length, i;
     for(i=0; i<len; i++) {

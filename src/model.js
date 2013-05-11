@@ -36,7 +36,7 @@ RESTless.Model = Ember.Object.extend( RESTless.State, Ember.Copyable, {
         if(attributeMap[attr].get('hasMany')) {
           this.set(attr, RESTless.RecordArray.createWithContent({type: attributeMap[attr].get('type')}));
         } else if(attributeMap[attr].get('belongsTo')) {
-          this.set(attr, get(window, attributeMap[attr].get('type')).create());
+          this.set(attr, get(Ember.lookup, attributeMap[attr].get('type')).create());
         }
       }
     }

@@ -13,7 +13,7 @@ RESTless.RecordArray = Ember.ArrayProxy.extend( RESTless.State, {
    */
   createItem:function(opts) {
     var type = this.get('type'),
-        itemClass = type ? get(window, type) : Ember.Object;
+        itemClass = type ? get(Ember.lookup, type) : Ember.Object;
     this.pushObject(itemClass.create(opts));
   },
 
@@ -21,7 +21,7 @@ RESTless.RecordArray = Ember.ArrayProxy.extend( RESTless.State, {
    * resourceTypeNamePlural: helper to get the plural resource name for array object type
    */
   resourceTypeNamePlural: function() {
-    var typeInstance = get(window, this.get('type')).create();
+    var typeInstance = get(Ember.lookup, this.get('type')).create();
     return get(typeInstance.constructor, 'resourceNamePlural');
   }.property('type'),
 
